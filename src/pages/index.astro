@@ -1,11 +1,44 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Hero from '../components/Hero';
+import AboutSection from '../components/AboutSection';
+import ChefQuoteSection from '../components/ChefQuoteSection';
+import AtmosphereSection from '../components/AtmosphereSection';
+import CountersSection from '../components/CountersSection';
+import MenuSection from '../components/MenuSection';
+import LocationHighlightSection from '../components/LocationHighlightSection';
+import ReservationSection from '../components/ReservationSection';
+import Footer from '../components/Footer';
 ---
 
-<Layout>
-	<Welcome />
+<Layout 
+	title="Nare Kuzu Evi | Niksar, Tokat, Erbaa'nın En İyi Restoranı" 
+	description="Nare Kuzu Evi: Niksar, Tokat ve Erbaa bölgesi için en lezzetli kuzu eti, kebap ve geleneksel Türk mutfağı deneyimi. Kuzu incik, ızgara küşleme ve meze çeşitleri."
+>
+	<main class="w-full relative">
+		<!-- Hero & Giriş -->
+		<Hero client:load />
+		<AboutSection client:visible />
+
+		<!-- Şefin Manifestosu -->
+		<ChefQuoteSection client:visible />
+
+		<!-- Atmosfer & Neden Biz -->
+		<AtmosphereSection client:visible />
+
+		<!-- Tezgah Vitrini -->
+		<CountersSection client:visible />
+
+		<!-- Menü Grid -->
+		<MenuSection client:visible />
+
+		<!-- Transit Yolcular & Lokasyon -->
+		<LocationHighlightSection client:visible />
+
+		<!-- Rezervasyon CTA -->
+		<ReservationSection client:visible />
+	</main>
+
+	<!-- Footer -->
+	<Footer client:visible />
 </Layout>

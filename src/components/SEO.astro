@@ -1,0 +1,102 @@
+---
+// İşletme verileri footer ve MenuSection.tsx mock verileriyle senkron —
+// Google İşletme Profili onaylandığında burada güncellenmeli (Blueprint.MD)
+const SITE_URL = Astro.site?.toString().replace(/\/$/, "") ?? "https://narekuzuevi.com";
+
+interface Props {
+	image?: string;
+}
+
+const { image = `${SITE_URL}/og-image.jpg` } = Astro.props;
+
+const RESTAURANT_ID = `${SITE_URL}/#localbusiness`;
+const MENU_ID = `${SITE_URL}/#menu`;
+
+const menu = [
+	{
+		name: "Başlangıçlar",
+		items: [
+			{ name: "Köz Patlıcan", description: "Tahinli ve sarımsaklı köz patlıcan ezmesi", price: 120, vegan: true },
+			{ name: "Tereyağlı Humus", description: "Sıcak tereyağı ve pastırma ile", price: 140 },
+		],
+	},
+	{
+		name: "Ana Yemekler",
+		items: [
+			{ name: "Kuzu İncik", description: "Ağır ateşte pişmiş, iç pilav yatağında", price: 450 },
+			{ name: "Izgara Küşleme", description: "Özel marinasyonlu pamuk gibi küşleme", price: 550 },
+		],
+	},
+];
+
+const schema = {
+	"@context": "https://schema.org",
+	"@graph": [
+		{
+			"@type": ["LocalBusiness", "Restaurant"],
+			"@id": RESTAURANT_ID,
+			name: "Nare Kuzu Evi",
+			description:
+				"Niksar, Tokat ve Erbaa bölgesinde ateşte pişmiş en lezzetli kuzu eti ve geleneksel Türk mutfağı. Kuzu incik, ızgara küşleme ve meze çeşitleriyle hizmetinizdeyiz.",
+			url: SITE_URL,
+			telephone: "+905308489060",
+			image,
+			logo: `${SITE_URL}/favicon.svg`,
+			priceRange: "₺₺",
+			servesCuisine: ["Türk Mutfağı", "Kebap", "Izgara"],
+			paymentAccepted: "Nakit, Kredi Kartı",
+			currenciesAccepted: "TRY",
+			acceptsReservations: true,
+			hasMenu: { "@id": MENU_ID },
+			hasMap: "https://www.google.com/maps/search/?api=1&query=Nare+Kuzu+Evi+Niksar",
+			address: {
+				"@type": "PostalAddress",
+				streetAddress: "Cumhuriyet Caddesi, Cebni Bey Mah. Seymenli Sokak No: 9",
+				addressLocality: "Niksar",
+				addressRegion: "Tokat",
+				postalCode: "60000",
+				addressCountry: "TR",
+			},
+			geo: {
+				// mock — GBP onaylanınca gerçek koordinatla değiştirilmeli
+				"@type": "GeoCoordinates",
+				latitude: 40.5867,
+				longitude: 36.9222,
+			},
+			openingHoursSpecification: [
+				{
+					"@type": "OpeningHoursSpecification",
+					dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+					opens: "11:00",
+					closes: "23:00",
+				},
+			],
+			// mock — gerçek profiller açılınca güncellenmeli
+			sameAs: ["https://www.instagram.com/narekuzuevi"],
+		},
+		{
+			"@type": "Menu",
+			"@id": MENU_ID,
+			name: "Nare Kuzu Evi Menüsü",
+			inLanguage: "tr-TR",
+			hasMenuSection: menu.map((section) => ({
+				"@type": "MenuSection",
+				name: section.name,
+				hasMenuItem: section.items.map((item) => ({
+					"@type": "MenuItem",
+					name: item.name,
+					description: item.description,
+					offers: {
+						"@type": "Offer",
+						price: String(item.price),
+						priceCurrency: "TRY",
+					},
+					...(item.vegan ? { suitableForDiet: "https://schema.org/VeganDiet" } : {}),
+				})),
+			})),
+		},
+	],
+};
+---
+
+<script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />

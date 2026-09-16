@@ -1,0 +1,85 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #121212; /* Deep black */
+  --color-secondary: #f4f4f0; /* Off-white / warm gray for brutalist feel */
+  --color-accent: #ff4500; /* Vivid orange-red for CTAs */
+  --color-border: #2a2a2a;
+
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-serif: 'Playfair Display', serif; /* For editorial touch */
+  
+  --spacing-fluid-1: clamp(1rem, 2vw, 1.5rem);
+  --spacing-fluid-2: clamp(2rem, 4vw, 3rem);
+  --spacing-fluid-3: clamp(4rem, 8vw, 6rem);
+}
+
+@layer base {
+  :root {
+    --bg-color: var(--color-primary);
+    --text-color: var(--color-secondary);
+  }
+
+  /* We might want a light mode variant, but let's stick to dark brutalist for now */
+  
+  html, body {
+    @apply bg-[var(--color-primary)] text-[var(--color-secondary)] font-sans antialiased;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif tracking-tight leading-none;
+  }
+
+  h1 {
+    font-size: clamp(3rem, 8vw, 8rem);
+    line-height: 0.9;
+  }
+
+  h2 {
+    font-size: clamp(2rem, 5vw, 4rem);
+  }
+  
+  h3 {
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  /* Custom Selection */
+  ::selection {
+    @apply bg-[var(--color-accent)] text-white;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-primary);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-accent);
+  }
+}
+
+@layer utilities {
+  .text-fluid-lg {
+    font-size: clamp(1.125rem, 2vw, 1.5rem);
+    line-height: 1.4;
+  }
+  
+  .border-editorial {
+    @apply border-b border-[var(--color-border)] pb-8 mb-8;
+  }
+
+  .hover-trigger .hover-target {
+    @apply opacity-0 translate-y-2 transition-all duration-300;
+  }
+  
+  .hover-trigger:hover .hover-target {
+    @apply opacity-100 translate-y-0;
+  }
+}

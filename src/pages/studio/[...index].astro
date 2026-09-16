@@ -1,0 +1,21 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+export function getStaticPaths() {
+  return [{ params: { index: undefined } }];
+}
+---
+
+<Layout title="Nare Kuzu Evi CMS">
+  <div id="sanity-studio" style="height: 100vh;"></div>
+  
+  <script>
+    import { renderStudio } from 'sanity';
+    import config from '../../../sanity.config';
+
+    const container = document.getElementById('sanity-studio');
+    if (container) {
+      renderStudio(container, config);
+    }
+  </script>
+</Layout>

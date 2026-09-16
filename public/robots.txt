@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://narekuzuevi.com/sitemap-index.xml

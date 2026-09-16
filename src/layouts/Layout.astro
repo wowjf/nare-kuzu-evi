@@ -1,23 +1,47 @@
+---
+import '../styles/global.css';
+import SEO from '../components/SEO.astro';
+import Header from '../components/Header';
+import WhatsAppBubble from '../components/WhatsAppBubble';
+
+interface Props {
+	title: string;
+	description?: string;
+	image?: string;
+}
+
+const SITE_URL = Astro.site?.toString().replace(/\/$/, "") ?? "https://narekuzuevi.com";
+const { title, description = "Nare Kuzu Evi - Geleneksel Lezzetler", image = `${SITE_URL}/og-image.jpg` } = Astro.props;
+---
+
 <!doctype html>
-<html lang="en">
+<html lang="tr">
 	<head>
-		<meta charset="utf-8" />
+		<meta charset="UTF-8" />
+		<meta name="description" content={description} />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		
+		<!-- Google Fonts: Inter & Playfair Display -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+		
+		<title>{title}</title>
+
+		<!-- SEO / OpenGraph Basic -->
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:type" content="restaurant" />
+		<meta property="og:url" content={Astro.site ?? "https://narekuzuevi.com"} />
+		<meta property="og:image" content={image} />
+
+		<SEO image={image} />
 	</head>
 	<body>
+		<Header client:load />
 		<slot />
+		<WhatsAppBubble client:load />
 	</body>
 </html>
-
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>
